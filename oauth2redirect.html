@@ -2,15 +2,15 @@
 <html>
 <body>
 <script>
-  const params = new URLSearchParams(window.location.hash.substring(1));
-  const token = params.get('access_token');
-  const expires_in = params.get('expires_in');
+  // Now we receive ?code= instead of #access_token=
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
 
-  if (token) {
-    window.opener.postMessage({ type: 'oauth_token', token, expires_in }, '*');
+  if (code) {
+    window.opener.postMessage({ type: 'oauth_code', code }, '*');
     window.close();
   } else {
-    document.body.textContent = 'No token received';
+    document.body.textContent = 'No authorization code received';
   }
 </script>
 </body>
